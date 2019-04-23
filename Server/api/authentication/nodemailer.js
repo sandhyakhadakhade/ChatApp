@@ -18,7 +18,7 @@ exports.sendEMailFunction = (url,Email) => {
     const mailOptions = {
         from: process.env.userName,          // sender address
         to: Email,           // list of receivers
-        subject: 'chatApp verification using node js',    // Subject line
+        subject: 'you requested for a password reset kindly use this link to reset your password',    // Subject line
         text: 'Your Email verification link is:\n\n' + url
     };
     transporter.sendMail(mailOptions, (err, info) => {

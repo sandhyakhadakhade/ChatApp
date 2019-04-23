@@ -26,6 +26,7 @@
 <script>
 import Vue from "vue";
 import VeeValidate from "vee-validate";
+import axios from "axios";
 Vue.use(VeeValidate);
 export default {
   name: "login",
@@ -42,7 +43,7 @@ export default {
     onSubmit() {
       this.$validator.validateAll().then(result => {
         if (result) {
-          alert("submit");
+          alert("token sent check your email");
         }
       });
     },
@@ -65,14 +66,6 @@ export default {
 };
 </script>
 <style scoped>
-/* h1{
-  color:blue
-} */
-/* label{
-  font-weight:bold;
-  text-align:center; 
-} */
-
 div.container {
   max-width: 800px;
   margin: 0 auto;

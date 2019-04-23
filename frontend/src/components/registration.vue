@@ -51,8 +51,10 @@
           class="help is-danger"
         >{{ errors.first('password_confirmation') }}</span>
       </div>
-      <button type="submit" class="ui submit button"  >Sign Up</button>
-      <!-- <button @onclick="submit()">Submit</button> -->
+      <button type="submit" class="ui submit button" >Sign Up</button>
+      <div align="center">
+      <router-link to="/login" >Login</router-link> 
+      </div>
     </form>
   </div>
 </template>
@@ -61,7 +63,6 @@
 import axios from "axios";
 import Vue from "vue";
 import VeeValidate from "vee-validate";
-import userServices from "../services/userServices";
 Vue.use(VeeValidate);
 export default {
   name: "registration",
@@ -71,14 +72,6 @@ export default {
       User: { FirstName: "", Email: "", Password: "", confirmPassword: "" }
     };
   },
-  // async created(){
-  //   try{
-  //     this.posts = await userServices.;
-  //   }catch(err){
-  //     this.error=err.message;
-
-  //   }
-  // },
   methods: {
     onSubmit() {
       this.$validator.validateAll().then(result => {
@@ -97,15 +90,16 @@ export default {
       axios
         .post("http://localhost:3000/registration", newUser)
         .then(response => {
-          console.log(response);
+          return response
+          // console.log(response);
         })
         .catch(error => {
-          console.log(error);
+          // console.log(error);
+          return error
         });
     }
   }
 };
-//http://localhost:3000/registration
 </script>
 
 <style scoped>

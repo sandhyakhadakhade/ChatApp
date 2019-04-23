@@ -1,12 +1,12 @@
 
- //  @Purpose :Create authentication to change the settings or password.
+ //@Purpose :Create authentication to change the settings or password.
 const jwt = require('jsonwebtoken');
 exports.checkToken = (req,res,next) => {
     console.log("req in token-",req.headers);
-    
     try{
         var token1 = req.headers['token'];
         //decode
+        console.log("token..............................",token1);
         if(token1){
             jwt.verify(token1,'secretkey',(err,decoded) => {
                 if(err){
@@ -15,10 +15,8 @@ exports.checkToken = (req,res,next) => {
                         message: 'token is not valid'
                     });
                 }else{
-
                     req.decoded = decoded;
                     console.log("req.decoded--->",decoded);
-                    
                     next();
                 }
             });

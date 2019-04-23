@@ -11,7 +11,7 @@
       <router-link to="/login">Login</router-link>|
       <router-link to="/forgot">forgotPass</router-link>|
       <router-link to="/rset">ResetPassword</router-link>
-       <!-- <router-link to="/">Home</router-link>| -->
+       <router-link to="/chat">ChatApp</router-link>|
         <div align = center>
    <img src="https://img.icons8.com/dotty/80/000000/communication.png" width="200" height="200">
          </div>

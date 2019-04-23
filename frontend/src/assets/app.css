@@ -1,0 +1,35 @@
+h2 {
+  font-weight: bold;
+  text-align: left;
+  color: blue;
+  background-size: 300px 100px;
+}
+body{
+  background-color:cadetblue;
+font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  color: black;
+  padding: 10px;
+  font-size: larger;
+  font-style: italic;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+}
+marquee {
+  background-color: linen;
+  color: black
+}
+button {
+  background-color: rgb(0, 255, 21);
+  padding: 10px 42px;
+  color: black;
+}
+#app {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
+#nav {
+  padding: 30px;
+  
+}

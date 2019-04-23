@@ -1,5 +1,4 @@
 //chat Schema
-
 mongoose = require('mongoose');
 var mongoSchema = mongoose.Schema;
 var chatSchema = new mongoSchema({
@@ -18,14 +17,15 @@ var chatSchema = new mongoSchema({
 },{
         timestimps : true
     });
+
 function chatModel() { };
-    var chat = mongoose.model(chatInfo,chatSchema);
+    var chat = mongoose.model("chatInfo",chatSchema);
 
 chatModel.prototype.addMessage = (chatData,callback) => {
     const newMsg = new chat({
-        senderId = chatData.senderId,
-        reciverId = chatData.reciverId,
-        message = chatData.message
+        senderId : chatData.senderId,
+        reciverId : chatData.reciverId,
+        message :chatData.message
     });
     newMsg.save((err,result) => {
         if(err){
@@ -38,7 +38,20 @@ chatModel.prototype.addMessage = (chatData,callback) => {
     })
 }
 
+chatModel.prototype.getAllUserChats = (chatData,callback) => {
+    chat.find({},(err,result) => {
+        if(err){
+            // console.log("User not found");
+            return callback(err);
+        }
+        else{
+            // console.log("user");
+            return callback(null,result);
+        }
+    })
+}
 
+module.exports = new chatModel;
 
 
 

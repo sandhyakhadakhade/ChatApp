@@ -9,11 +9,11 @@ import login from './components/login.vue';
 import ForgotPass from './components/ForgotPass.vue';
 import ResetPass from './components/ResetPass.vue';
 
-import VueRouter from 'vue-router';
+// import VueRouter from 'vue-router';
 
 Vue.use(VueResource);
 
-Vue.use(VueRouter);
+// Vue.use(VueRouter);
 
 
 const router = new VueRouter( {
@@ -23,6 +23,11 @@ const router = new VueRouter( {
     {path:'/login',component : login},
     {path:'/forgot',component : ForgotPass},
     {path:'/rset',component : ResetPass},
+    {
+      path:'/chat',
+      name: 'chat',
+      component:chatDemo
+    }
     
   ]
   

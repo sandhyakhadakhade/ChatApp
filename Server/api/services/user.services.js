@@ -18,7 +18,6 @@ exports.login = (data, callback) => {
         callback.send(error);
     }
 }
-
 //registration
 exports.registration = (data, callback) => {
     console.log('req in services',data);
@@ -37,8 +36,6 @@ exports.registration = (data, callback) => {
         callback.send(error);
     }
 }
-
-
 exports.redirect = (decoded, callback) => {
     userModel.confirmUser(decoded, (err, result) => {
         if (err) {

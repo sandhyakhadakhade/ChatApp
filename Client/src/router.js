@@ -6,7 +6,7 @@ import registration from './components/registration.vue';
 import login from './components/login.vue';
 import ForgotPass from './components/ForgotPass.vue';
 import ResetPass from './components/ResetPass.vue';
-
+import chatDemo from './components/chatDemo.vue';
 Vue.use(Router)
 
 export default new Router({
@@ -37,6 +37,11 @@ export default new Router({
       path: '/rset',
       name: 'rset',
       component: ResetPass
+    },
+    {
+      path:'/chat',
+      name: 'chat',
+      component:chatDemo
     }
    
     // {

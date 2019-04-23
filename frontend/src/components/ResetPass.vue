@@ -30,7 +30,6 @@
         >{{ errors.first('password_confirmation') }}</span>
       </div>
       <button type="submit" class="ui submit button"  >Submit</button>
-      <!-- <button @onclick="submit()">Submit</button> -->
     </form>
   </div>
 </template>
@@ -39,7 +38,6 @@
 import axios from "axios";
 import Vue from "vue";
 import VeeValidate from "vee-validate";
-import userServices from "../services/userServices";
 Vue.use(VeeValidate);
 export default {
   name: "registration",
@@ -49,17 +47,11 @@ export default {
       User: {   Password: "", confirmPassword: "" }
     };
   },
-  // async created(){
-  //   try{
-  //     this.posts = await userServices.;
-  //   }catch(err){
-  //     this.error=err.message;
-
-  //   }
-  // },
+ 
   methods: {
     onSubmit() {
       this.$validator.validateAll().then(result => {
+      
         if (result) {
           alert("Your password has been successful reset, you can now login with your new password");
         }
@@ -70,19 +62,26 @@ export default {
        Password: this.User.Password,
        confirmPassword: this.User.confirmPassword
       };
-      console.log(newUser);
+       console.log(newUser);
       axios
-        .post("http://localhost:3000/resetpassword/:token", newUser)
+        .post("http://localhost:3000/resetpassword",newUser, {
+    headers: { token: this.$route.params.token}
+})
         .then(response => {
-          console.log(response);
+          // console.log(response);
+          return response;
         })
         .catch(error => {
-          console.log(error);
+        //  console.log(error);
+          return error;
         });
     }
-  }
+  },
+  beforeMount(){
+    var token = this.$route.params.token;
+    console.log(token);
+ }
 };
-//http://localhost:3000/registration
 </script>
 
 <style scoped>

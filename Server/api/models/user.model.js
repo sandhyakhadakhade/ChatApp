@@ -90,7 +90,7 @@ userModel.prototype.login = (body, callback) => {
             bcrypt.compare(body.Password, result[0].Password).then(function (res) {
                 if (res) {
                     console.log("Login Succesfully");
-                    callback(null, res);
+                    callback(null, result);
                 } else {
                     console.log("Incorrect password");
                     callback("Incorrect password");
@@ -102,8 +102,6 @@ userModel.prototype.login = (body, callback) => {
         }
     });
 }
-
-
 //  update the user password and store it in database
  
 userModel.prototype.updateUserPassword = (req, callback) => {
@@ -139,6 +137,15 @@ userModel.prototype.findUserEmail = (data, callback) => {
     });
 }
 
+userModel.prototype.getAllUsers = (data ,callback) =>{
+    user.find({} ,(err,result)=>{
+        if(err){
+            callback(err);
+        }else{
+            callback(null,result);
+        }
+    } )
+}
 
 module.exports = new userModel();
 

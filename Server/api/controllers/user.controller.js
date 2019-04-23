@@ -8,8 +8,6 @@ const sent = require('../authentication/nodemailer.js');
 
 // };
 
-
-
 //CORS middleware
 // var allowCrossDomain = function(req, res, next) {
 //     res.header('Access-Control-Allow-Origin', 'example.com');
@@ -56,8 +54,16 @@ module.exports.login = (req, res) => {
                 responseResult.error = err;
                 res.status(401).send(responseResult);
             } else {
+                resObj={
+                    email:result[0].email,
+                    userid:result[0]._id
+                }
+
+                const obj = token.GenerateToken(resObj);
+                resObj.token=obj.token;
+                resObj.name=result[0].FirstName;
                 responseResult.success = true;
-                responseResult.result = result;
+                responseResult.result = resObj;
                 res.status(200).send(responseResult);
             }
         })
@@ -129,6 +135,7 @@ exports.getUser = (req, res) => {
         try {
             var responseResult = {}
             console.log("user in cntrol send token is verified response");
+            // var obj={password:req.}
             userService.resetpassword(req, (err, result) => {
                 if (err) {
                     responseResult.success = false;
@@ -142,6 +149,32 @@ exports.getUser = (req, res) => {
                 }
             })
         } catch (err) {
+            res.send(err);
+        }
+    }
+    exports.getAllUsers = (req,res) =>{
+        try{
+            var responseResult = {}
+            console.log("In controller ",req.body);
+            userService.getAllUsers(req,(err,result) => {
+                if(err){
+                    responseResult.success = false;
+                    responseResult.error = err;
+                    res.status(500).send(responseResult);
+                }else{
+                    responseResult.success = true;
+                    responseResult.result = result;
+                    var allUsers = [];
+                    for(let i=0; i < responseResult.result.length; i++){
+                        allUsers.push({"userid":responseResult.result[i]._id,"name":responseResult.result[i].FirstName});
+                        // allUsers = responseResult.result[i].FirstName;
+                    }
+                    res.status(200).send(allUsers);
+                    // res.status(200).send(responseResult);
+
+                }
+            })
+        }catch(err){
             res.send(err);
         }
     }
