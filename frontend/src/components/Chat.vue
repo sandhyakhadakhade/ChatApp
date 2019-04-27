@@ -1,46 +1,81 @@
 <template>
   <div id="app">
     <div position="static" align="center">
-        <h1>Welcome TO ChatApp..!!!</h1>
+       <div align="center">
+        <span style="font-weight:bold; font-size: 30px">Welcome TO ChatApp..!!!</span>
+      </div>
+    </div>
+    <div align="right">
+      <Button class="grow" color="inherit" align="right" v-on:click="logout()">Logout</Button>
     </div>
     <div align="left">
       <router-link to="/AllUsers" tag="button">AllUsers</router-link>
-      <!-- <input type="submit" value="AllUsers"/>-->
-     <!-- <a v-bind:href="'/AllUsers/'">all</a> -->
-     <!-- <a [routerLink]="[{ outlets: { primary: 'AllUsers', aside: null }}]"> AllUsers</a> -->
     </div>
-    <div align="right">
-      <Button class="grow" color="inherit" align="right" onClick="{this.logout}">Logout</Button>
-    </div>
-   <!-- <router-link to="/messages">messages</router-link> -->
-   <!-- <router-link @click.native="$scrollToTop"> -->
-
-
+    <form class="ui form">
+      <div align="left">
+        <span style="font-weight:bold">OnlineUsers</span>
+      </div>
+      <tr v-for="user_alias in User">
+        <a
+          style="cursor: pointer; margin-right: 150px;"
+          v-on:click="navigateToMessage(user_alias)"
+        >{{"⬤ "+user_alias.name}}</a>
+      </tr>
+    </form>
   </div>
 </template>
   <script>
 var socket = null;
+import router from "../router";
+import axios from "axios";
 export default {
-  // State 0: select username
-  // State 1: chat application
   name: "app",
   data() {
     return {
+      User: []
+    };
+  },
+  methods: {
+     navigateToLogin(){
+       this.$router.push({ path: '/login' })
+    },
+    navigateToMessage(user) {
+      // console.log(user.name);
+      localStorage.setItem("reciverId", user.userid);
+      localStorage.setItem("name", user.name);
+      router.push({ name: "messages" });
+    },
+      logout() {
+    localStorage.removeItem('token');
+    this.navigateToLogin();
+  },
+    mounted() {
+      axios
+        .get("http://localhost:3000/getAllUsers")
+
+        .then(response => {
+          //  console.log(response.data.userid);
+          this.User = response.data;
+          localStorage.setItem("reciverId", response.data.userid); //response.data.result.userid
+          return response;
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
   },
-  method:{
-    scrollToTop(){
-      window.scrollTo(0,0);
-    },
-  logout() {
-    axios.post('logout')
-    .then(function(){
-      location.reload();
-    })
-    .catch(error =>{
-      this.errors.push(error);
-    })
+  beforeMount() {
+    this.mounted();
   },
-  }
-}
+  scrollToTop() {
+    window.scrollTo(0, 0);
+  },
+
+
+};
 </script>
+
+<style lang="scss">
+  @import'/home/admin1/JavaScript/ChatApllication/frontend/src/assets/main.scss'
+</style>
+

@@ -51,12 +51,12 @@ export default new Router({
      {
        path:'/AllUsers',
        name:'AllUsers',
-       component:AllUsers,
+       component:AllUsers
      },
      {
        path:'/messages',
        name:'messages',
-       component:messages
+       component:messages,
      }
    
     // {

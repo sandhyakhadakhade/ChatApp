@@ -62,7 +62,6 @@ export default {
         if (response) {
           if(this.navigate()){
             alert("login successfully");
-
           }
         }
       });

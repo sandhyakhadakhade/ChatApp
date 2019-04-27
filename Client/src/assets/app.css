@@ -1,4 +1,3 @@
-
 h2 {
   font-weight: bold;
   text-align: left;
@@ -6,7 +5,7 @@ h2 {
   background-size: 300px 100px;
 }
 body{
-  background-color:rgb(112, 131, 141);
+  background-color:rgb(90, 93, 94);
 font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   color: black;
   padding: 10px;
@@ -34,9 +33,3 @@ button {
   padding: 30px;
   
 }
-.container{
-  height: 800px;
-  width: 2000px;
-  background-image: url('/img/watsapp-background-3.07b37d9e.jpg');
-}
-

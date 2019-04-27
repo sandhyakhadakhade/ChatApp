@@ -1,14 +1,10 @@
 <template>
   <div class="container">
     <form class="ui form">
-      <div align="left">
-        <span style="font-weight:bold">OnlineUsers</span>
-      </div>
-      <tr v-for="user_alias in User">
-        <a style="cursor: pointer; text-decoration: underline"
-          v-on:click="navigateToMessage(user_alias)"
-        >{{"⬤ "+user_alias.name}}</a>
-      </tr>
+      <h1 align = "left">OnlineUsers</h1>
+          <tr v-for="user_alias in User">
+        <a style="cursor: pointer; text-decoration: underline" v-on:click="navigateToMessage(user_alias)">{{"⬤     "+user_alias.name}}</a>
+          </tr>
     </form>
   </div>
 </template>
@@ -26,12 +22,13 @@ export default {
     navigateToMessage(user) {
       // console.log(user.name);
       localStorage.setItem("reciverId", user.userid);
-      localStorage.setItem("name", user.name);
+      localStorage.setItem("name",user.name);
       router.push({ name: "messages" });
     },
     mounted() {
       axios
         .get("http://localhost:3000/getAllUsers")
+
         .then(response => {
           //  console.log(response.data.userid);
           this.User = response.data;
@@ -43,9 +40,9 @@ export default {
         });
     }
   },
-  beforeMount() {
-    this.mounted();
-  }
+  beforeMount(){
+    this.mounted()
+ }
 };
 </script>
 

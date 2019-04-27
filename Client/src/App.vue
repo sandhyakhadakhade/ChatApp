@@ -1,42 +1,23 @@
 <template>
   <div id="app">
-    <div id="nav">
-     <body>
-     <marquee>Welcome to ChatApp</marquee>
-   <h1>HomePage</h1>
-             <!-- <router-link to="/login">Login</router-link> |   -->
-         <!-- <router-link to="/register">Create New Account</router-link> <br> -->
-        
-      <router-link to="/register">Register</router-link>|
-      <router-link to="/login">Login</router-link>|
-      <router-link to="/forgot">forgotPass</router-link>|
-      <router-link to="/rset">ResetPassword</router-link>
-       <router-link to="/chat">ChatApp</router-link>|
-        <div align = center>
-   <img src="https://img.icons8.com/dotty/80/000000/communication.png" width="200" height="200">
-         </div>
-   </body>
+    <!-- <marquee>Welcome to ChatApp</marquee> -->
+    <!-- <h2>ChatApp</h2> -->
+    <div id="nav" align = left>
+      <router-link to="/">Home</router-link>
+      <!-- <router-link to="/chat">Chat</router-link> -->
+      <!-- <router-link to="/register" tag="button">Create New Account</router-link> -->
+      <!-- <router-link to="/login" tag="button">Login</router-link> -->
+      <!-- <router-link to="/forgotpassword" tag="button">ForgotPassword</router-link> -->
+      <!-- <router-link to="/resetpassword/:token" tag="button">ResetPassword</router-link>  -->
     </div>
     <router-view/>
   </div>
 </template>
-
+<script>
+export default {
+  
+}
+</script>
 <style lang="scss">
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
+ @import './assets/app.css';
 </style>

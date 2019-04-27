@@ -22,6 +22,8 @@ function chatModel() { };
     var chat = mongoose.model("chatInfo",chatSchema);
 
 chatModel.prototype.addMessage = (chatData,callback) => {
+    console.log('data in model',chatData);
+    
     const newMsg = new chat({
         senderId : chatData.senderId,
         reciverId : chatData.reciverId,

@@ -1,40 +1,46 @@
 import Vue from 'vue'
 import App from './App.vue'
-import VueResource from 'vue-resource'
-// import router from './router'
+import router from './router'
+import store from './store.js'
+import VeeValidate from 'vee-validate';
 
-import Home from './components/Home.vue';
-import registration from './components/registration.vue';
-import login from './components/login.vue';
-import ForgotPass from './components/ForgotPass.vue';
-import ResetPass from './components/ResetPass.vue';
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 
-// import VueRouter from 'vue-router';
+// Require the main Sass manifest file
+require('./assets/main.scss');
 
-Vue.use(VueResource);
+Vue.config.productionTip = false;
 
-// Vue.use(VueRouter);
+//setting scocket
+import VueSocketIO from 'vue-socket.io'
+import SocketIO from 'socket.io-client';
+const options = { path: '/messages' };
+Vue.use(new VueSocketIO({
+  debug: true,
+  connection: SocketIO('http://localhost:3000',options),
+  vuex: {
+      store,
+      actionPrefix: 'SOCKET_',
+      mutationPrefix: 'SOCKET_'
+  },
+  options: { path: "/my-app/" } //Optional options
+}))
+
+// export const SocketInstance = socketio('http://localhost:3000');
+
+// Vue.use(VueSocketIO, SocketInstance);
 
 
-const router = new VueRouter( {
-  routes : [
-    {path:'/',component : Home},
-    {path:'/register',component : registration},
-    {path:'/login',component : login},
-    {path:'/forgot',component : ForgotPass},
-    {path:'/rset',component : ResetPass},
-    {
-      path:'/chat',
-      name: 'chat',
-      component:chatDemo
-    }
-    
-  ]
-  
-  });
+ 
+//access throught the project
+// window.axios=axios;
+Vue.use(VueAxios, axios)
 
+Vue.config.productionTip = false;
+Vue.use(VeeValidate)
 new Vue({
-  e1:'app',
   router,
+  store,
   render: h => h(App)
 }).$mount('#app')

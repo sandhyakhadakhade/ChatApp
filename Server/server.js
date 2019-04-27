@@ -54,18 +54,24 @@ io.sockets.on('connection', function (socket) {
     connections.push(socket)
     console.log("A user has connected");
     socket.on('newmsg', function (req) {
+
         console.log("req in server js======>",req);
         chatControllers.addMessage(req, (err, result) => {
+            console.log(result);
+            
             if (err) {
-              
                 console.log("error on server while receiving data");
                 console.log(err);
             }
             else {
+      
+
                // socket.emit('emitMsg', result);
+            //    io.emit(req.recieverId, result);
+            //    io.emit(req.senderId,result);
             }
-            io.emit(req.recieverId, result);
-            io.emit(req.senderId,result);
+            // io.emit(req.senderId,result);
+            io.emit('MESSAGE', req);
         })
     })
 })

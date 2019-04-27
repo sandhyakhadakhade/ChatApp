@@ -1,195 +1,143 @@
 <template>
   <div class="hello">
-    <div @submit.prevent="submit">
-      <!-- <marquee>Welcome to ChatApp</marquee> -->
-    </div>
-    <center>
-      <table>
-        <div>
-          <h2 class="form_title">Create New Account</h2>
-        </div>
-        <div>
-          <h2 class="form_name">
-            Name
-            <input
-              type="text"
-              name="name"
-              id="name"
-              placeholder="User Name"
-              v-model="name"
-              required
-            >
-            <span v-show="name">required</span>
-          </h2>
-        </div>
-
-        <h2 class="form_name">
-          Email
-          <input
-            type="email"
-            class="form-control"
-            placeholder="Email Address"
-            v-model="email"
-            required
-          >
-          <span v-show="email">required</span>
-        </h2>
-
-        <h2 class="form_name">
-          Password
-          <input
-            v-validate="'required'"
-            name="password"
-            type="password"
-            placeholder="Password"
-            ref="password"
-          >
-        </h2>
-
-        <h2 class="form_name">
-          Confirm Password
-          <input
-            v-validate="'required|confirmed:password'"
-            name="password_confirmation"
-            type="password"
-            placeholder="Password, Again"
-            data-vv-as="password"
-          >
-        </h2>
-        <!-- <div align = center>
-        <button class="button">Register</button>
-        </div>-->
-        <div align="center">
-          <button type="submit" class="button">Submit</button>
-        </div>
+    <h1>{{title}}</h1>
+    <form class="ui form" @submit.prevent="onSubmit" @click="addtoAPI">
+      <div class="field" :class="{error: errors.has('FirstName')}">
+        <label>Name&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;</label>
+        <input
+          type="text"
+          name="FirstName"
+          placeholder="Name"
+          v-validate="'required'"
+          v-model="User.FirstName"
+        >
+        <div class="error" v-if="errors.has('FirstName')">{{errors.first('FirstName')}}</div>
+      </div>
+      <div class="field" :class="{error: errors.has('Email')}">
+        <label>Email&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;</label>
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          v-validate="'required|email'"
+          v-model="User.Email"
+        >
+        <div class="error" v-if="errors.has('email')">{{errors.first('email')}}</div>
+      </div>
+      <div>
+        <label>Password&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;</label>
+        <input
+          v-validate="'required'"
+          name="password"
+          type="password"
+          :class="{'is-danger': errors.has('password')}"
+          placeholder="Password"
+          v-model="User.Password"
+          ref="password"
+        >
+        <span v-show="errors.has('password')" class="help is-danger">{{ errors.first('password') }}</span>
         <br>
-        <div align="center">
-          <router-link to="/login">Login</router-link>
-          <!-- <a href="/home/admin1/JavaScript/ChatApp/chatapp/src/components/login.html">Login</a> -->
-        </div>
-        <button v-on:click.prevent="post">Add Blog</button>
-        <br>
-      </table>
-    </center>
+        <label>confirmPassword&ensp;</label>
+        <input
+          v-validate="'required|confirmed:password'"
+          name="password_confirmation"
+          type="password"
+          :class="{'is-danger': errors.has('password_confirmation')}"
+          placeholder="Password, Again"
+          data-vv-as="password"
+        >
+        <span
+          v-show="errors.has('password_confirmation')"
+          class="help is-danger"
+        >{{ errors.first('password_confirmation') }}</span>
+      </div>
+      <button type="submit" class="ui submit button" >Sign Up</button>
+      <div align="center">
+      <router-link to="/login" >Login</router-link> 
+      </div>
+    </form>
   </div>
 </template>
+
 <script>
-// import passwordValidation from '../components/passwordValidation.vue';     <passwordValidation/>  passwordValidation
+import axios from "axios";
+import Vue from "vue";
+import VeeValidate from "vee-validate";
+Vue.use(VeeValidate);
 export default {
-  name: "app",
-  components: {},
+  name: "registration",
   data() {
     return {
-      title:"",
-      errors: [],
-      name: null,
-      email: ""
+      title: "Registration for ChatApp",
+      User: { FirstName: "", Email: "", Password: "", confirmPassword: "" }
     };
   },
   methods: {
-    checkForm(e) {
-      if (this.name) {
-        return true;
-      }
-      this.errors = [];
-      if (!this.name) {
-        this.errors.push("Name requirded");
-      }
-      e.preventDefault();
+    onSubmit() {
+      this.$validator.validateAll().then(result => {
+        if (result) {
+          alert("Register successfully");
+        }
+      });
+    },
+    addtoAPI() {
+      let newUser = {
+        FirstName: this.User.FirstName,
+        Email: this.User.Email,
+        Password: this.User.Password
+      };
+      console.log(newUser);
+      axios
+        .post("http://localhost:3000/registration", newUser)
+        .then(response => {
+          return response
+          // console.log(response);
+        })
+        .catch(error => {
+          // console.log(error);
+          return error
+        });
     }
-  },
-  submit() {
-    this.$v.form.$touch();
-    if (this.$v.form.$error) return;
-    // to form submit after this
-    alert("Form submitted");
-  },
-  post:function(){
-    this.$http.post('https://jsonplaceholder.typicode.com/posts',{
-      title:this.blog.title,
-      name:this.blog.name
-    }).then(function(data){
-      console.log(data);
-    });
   }
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-#container_body {
-  padding: 20px;
+div.container {
+  max-width: 800px;
+  margin: 0 auto;
 }
-.form_title {
-  font-size: 35px;
-  font-weight: bold;
-  color: darkblue;
-  text-align: center;
+p.error {
+  border: 1px solid;
+  background-color: #ffc5c1;
   padding: 10px;
+  margin-bottom: 15px;
 }
-.head_para {
-  font-size: 19px;
-  color: #99a2a7;
-  text-align: center;
-  font-weight: normal;
-}
-.button {
-  background-color: green;
+button{
+ background-color: #4CAF50;
   border: none;
   color: white;
-  padding: 5px 32px;
-  text-align: right;
+  padding: 10px 42px;
+  text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
   margin: 4px 2px;
   cursor: pointer;
-}
-#form_name {
-  padding: 25px 0 0 15px;
-  font-weight: 300;
-  color: black;
-  font-weight: normal;
+        }
+h1 {
   text-align: left;
+  color: black;
 }
+label{
+  font-weight:bold;
+  text-align:center; 
 
-table {
-  border: 1px solid black;
 }
-#name {
-  margin-right: 20px;
-}
-marquee {
-  /* background-color: blueviolet; */
-  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
-  color: black;
-  padding: 10px;
-  font-size: larger;
-  font-style: italic;
-  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
-}
-.box {
-  width: 25vw;
-  padding: 1em;
-  perspective: 600px;
-  position: relative;
-}
-h3 {
-  margin: 40px 0 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: blue;
-  text-align: left;
-  font-weight: bold;
-}
-body {
+form {  
   background-color: lightgrey;
-  width: 300px;
-  border: 25px solid green;
+  width: 500px;
+  border: 25px solid steelblue;
   padding: 25px;
   margin: 25px;
 }
